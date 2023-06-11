@@ -51,7 +51,7 @@ class Program
         if (hSCM == IntPtr.Zero)
             return false;
 
-        IntPtr hService = NativeMethods.OpenService(hSCM, "Mert", NativeMethods.ServiceAccess.SERVICE_ALL_ACCESS);
+        IntPtr hService = NativeMethods.OpenService(hSCM, "Terminator", NativeMethods.ServiceAccess.SERVICE_ALL_ACCESS);
         if (hService != IntPtr.Zero)
         {
             Console.WriteLine("Service already exists.");
@@ -62,8 +62,8 @@ class Program
 
         hService = NativeMethods.CreateService(
             hSCM,
-            "Mert",
-            "MErt",
+            "Terminator",
+            "Terminator",
             NativeMethods.ServiceAccess.SERVICE_ALL_ACCESS,
             NativeMethods.ServiceType.SERVICE_KERNEL_DRIVER,
             NativeMethods.ServiceStartType.SERVICE_DEMAND_START,
