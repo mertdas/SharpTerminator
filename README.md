@@ -6,7 +6,8 @@ C# port of ZeroMemoryEx's Terminator, so all hail goes to him.
 
 Compile project with Visual Studio<br>
 Place the driver Terminator.sys or any signed driver anywhere<br>
-use execute-assembly /path/to/SharpTerminator.exe
+use execute-assembly /path/to/SharpTerminator.exe<br>
+run program as an administrator
 
 Before:
 
