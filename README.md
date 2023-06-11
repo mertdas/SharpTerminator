@@ -18,6 +18,6 @@ After:
 ![image](https://github.com/mertdas/SharpTerminator/assets/48562581/b078b41f-4514-4c7c-b1a7-1ec2919b05e2)
 
 # Credit
-ZeroMemoryEx https://github.com/ZeroMemoryEx/Terminator
+ZeroMemoryEx https://github.com/ZeroMemoryEx/Terminator<br>
 Spyboy :)
 
