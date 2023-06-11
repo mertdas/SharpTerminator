@@ -21,7 +21,7 @@ execute-assembly SharpTerminator.exe --disk "C:\path\to\driver\Terminator.sys"
 
 
 ### Download driver from remote url and terminate AV/EDR:
-![image](https://github.com/mertdas/SharpTerminator/assets/48562581/8eb24a46-8c00-4cd3-8a73-42409b234114)
+![image](![image](https://github.com/mertdas/SharpTerminator/assets/48562581/6c13552b-6bc2-4b3f-8af4-e70f0952ec9b))
 
 ### Load driver from disk and terminate AV/EDR:
 
