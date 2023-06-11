@@ -1,0 +1,8 @@
+C:\Users\USer\source\repos\SharpTerminator\SharpTerminator\bin\Release\SharpTerminator.exe.config
+C:\Users\USer\source\repos\SharpTerminator\SharpTerminator\bin\Release\SharpTerminator.exe
+C:\Users\USer\source\repos\SharpTerminator\SharpTerminator\bin\Release\SharpTerminator.pdb
+C:\Users\USer\source\repos\SharpTerminator\SharpTerminator\obj\Release\SharpTerminator.csproj.AssemblyReference.cache
+C:\Users\USer\source\repos\SharpTerminator\SharpTerminator\obj\Release\SharpTerminator.csproj.SuggestedBindingRedirects.cache
+C:\Users\USer\source\repos\SharpTerminator\SharpTerminator\obj\Release\SharpTerminator.csproj.CoreCompileInputs.cache
+C:\Users\USer\source\repos\SharpTerminator\SharpTerminator\obj\Release\SharpTerminator.exe
+C:\Users\USer\source\repos\SharpTerminator\SharpTerminator\obj\Release\SharpTerminator.pdb
