@@ -29,6 +29,10 @@ execute-assembly SharpTerminator.exe --disk "C:\path\to\driver\Terminator.sys"
 
 ![sharpterminatsor-disk](https://github.com/mertdas/SharpTerminator/assets/48562581/ee37b11d-c803-48a9-ac97-0b0c17af1af7)
 
+# Known Issue
+If you get "Failed to register the process in the trusted list!" error you should add service manually:
+sc create Terminator binPath= "C:\path\to\driver.sys" type= kernel start= demand
+
 # Credit
 ZeroMemoryEx https://github.com/ZeroMemoryEx/Terminator<br>
 Spyboy :)
